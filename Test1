@@ -1,0 +1,44 @@
+-- Grow A Garden - Pet System Tester (LocalScript)
+-- For testing RemoteEvents with permission
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+
+-- You may need to update these names based on the actual RemoteEvents used in Grow A Garden
+local petRemote = ReplicatedStorage:FindFirstChild("PetSystem") -- Example RemoteEvent
+local boostRemote = ReplicatedStorage:FindFirstChild("BoostPetStats") -- Optional RemoteEvent
+
+-- Test Data for your fake pet
+local testPetData = {
+    Name = "GrowTesterPet",
+    Type = "Epic",
+    WeightBoost = 5000,
+    Speed = 100,
+    Owner = player.Name
+}
+
+-- Function to test pet creation
+local function testAddPet()
+    if petRemote and petRemote:IsA("RemoteEvent") then
+        print("🚀 Sending test pet data...")
+        petRemote:FireServer(testPetData)
+    else
+        warn("❌ PetSystem RemoteEvent not found.")
+    end
+end
+
+-- Function to test stat boosting (if available)
+local function testBoostPet()
+    if boostRemote and boostRemote:IsA("RemoteEvent") then
+        print("⚡ Sending boost command...")
+        boostRemote:FireServer("GrowTesterPet", 9999) -- Example boost value
+    else
+        warn("❌ BoostPetStats RemoteEvent not found.")
+    end
+end
+
+-- Run both tests
+testAddPet()
+task.wait(1)
+testBoostPet()
