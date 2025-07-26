@@ -1,0 +1,30 @@
+-- LocalScript: StarterPlayerScripts or StarterGui
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local player = game:GetService("Players").LocalPlayer
+
+-- Simulated RemoteEvents (you must have these in ReplicatedStorage)
+local PetStatsEvent = ReplicatedStorage:WaitForChild("PetStatsSystem") -- RemoteEvent
+local FruitWeightEvent = ReplicatedStorage:WaitForChild("FruitSystem") -- RemoteEvent
+
+-- Replace with your own pet and fruit names/IDs
+local newPetStats = {
+    Name = "MyEpicPet",
+    Speed = 100,
+    Strength = 999,
+    Boost = 2.0,
+}
+
+local newFruitStats = {
+    Name = "GoldenApple",
+    Weight = 5000,
+    Rarity = "Legendary"
+}
+
+-- Rewrite Pet Stats (send to server)
+PetStatsEvent:FireServer("UpdateStats", newPetStats)
+
+-- Rewrite Fruit Weight (send to server)
+FruitWeightEvent:FireServer("UpdateFruit", newFruitStats)
+
+print("Custom pet and fruit stats sent to server!")
